@@ -33,6 +33,7 @@ supabase-mcp/
 - Full Pydantic validation for all operations
 - Comprehensive type hints and documentation
 - Integration tests with Supabase
+- Real-time database event streaming using Server-Sent Events (SSE)
 
 ## Setup
 
@@ -136,6 +137,39 @@ Example:
     "filters": {"status": "inactive"}
 }
 ```
+
+## Server-Sent Events (SSE) Support
+
+The Supabase MCP Server provides real-time event streaming using Server-Sent Events (SSE). This allows clients (such as MCP clients or custom UIs) to receive live notifications from the server without polling.
+
+### SSE Endpoints
+
+- **GET `/sse/stream`**
+  - Clients can connect to this endpoint to receive a live stream of server events.
+  - The response uses the `text/event-stream` media type.
+  - Example (using `curl`):
+    ```bash
+    curl -N http://localhost:3000/sse/stream
+    ```
+
+- **POST `/sse/messages`**
+  - Internal components or authorized users can broadcast a message to all connected SSE clients.
+  - Example (using `curl`):
+    ```bash
+    curl -X POST http://localhost:3000/sse/messages \
+      -H "Content-Type: application/json" \
+      -d '{"message": "Hello, SSE!"}'
+    ```
+
+### Usage Notes
+- The SSE stream remains open; each message is sent as a new event.
+- For production, restrict the `/sse/messages` endpoint to internal or authenticated use.
+- This feature is fully async and does not interfere with existing MCP or Supabase endpoints.
+
+### Example Use Cases
+- Notify clients of schema changes or new data.
+- Provide live feedback for long-running operations.
+- Enable UIs to react to backend events in real-time.
 
 ## Docker
 
