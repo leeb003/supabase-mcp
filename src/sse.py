@@ -138,7 +138,7 @@ async def start_supabase_realtime_listener():
     # Start channel status checker
     asyncio.create_task(check_channel_status())
 
-@router.get("/sse/stream")
+@router.get("/stream")
 async def sse_stream(request: Request):
     """
     SSE endpoint for streaming database events to clients.
