@@ -20,6 +20,9 @@ RUN pip install --upgrade pip && pip install -r requirements.txt
 # Copy project files
 COPY . .
 
+# Ensure config.json exists (copy from example if missing)
+RUN if [ ! -f config.json ]; then cp config.json.example config.json; fi
+
 # Expose the port (default FastAPI/Uvicorn port)
 EXPOSE 3000
 
