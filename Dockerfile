@@ -28,4 +28,4 @@ RUN if [ ! -f config.json ]; then cp config.json.example config.json; fi && \
 EXPOSE 3000
 
 # Command to run the application
-CMD ["python", "-m", "src.server"]
+CMD ["uvicorn", "src.server:app", "--host", "0.0.0.0", "--port", "3000"]
