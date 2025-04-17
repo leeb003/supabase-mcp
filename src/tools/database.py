@@ -1,7 +1,7 @@
 """Database operation tools for the Supabase MCP server."""
 from typing import Dict, List
 
-from ..types import ReadQuery, CreateQuery, UpdateQuery, DeleteQuery
+from src.db_types import ReadQuery, CreateQuery, UpdateQuery, DeleteQuery
 from ..config import get_supabase_client
 
 # Initialize Supabase client
@@ -86,11 +86,11 @@ def update_records(query: UpdateQuery) -> List[Dict]:
         List of updated records
     """
     db_query = supabase.table(query.table_name)
-    
-    for column, value in query.filters.items():
-        db_query = db_query.eq(column, value)
-    
-    return db_query.update(query.updates).execute().data
+    update_call = db_query.update(query.updates)
+    if query.filters:
+        for column, value in query.filters.items():
+            update_call = update_call.eq(column, value)
+    return update_call.execute().data
 
 def delete_records(query: DeleteQuery) -> List[Dict]:
     """
@@ -115,8 +115,8 @@ def delete_records(query: DeleteQuery) -> List[Dict]:
         List of deleted records
     """
     db_query = supabase.table(query.table_name)
-    
-    for column, value in query.filters.items():
-        db_query = db_query.eq(column, value)
-    
-    return db_query.delete().execute().data
+    delete_call = db_query.delete()
+    if query.filters:
+        for column, value in query.filters.items():
+            delete_call = delete_call.eq(column, value)
+    return delete_call.execute().data

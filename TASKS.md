@@ -53,7 +53,6 @@ This document outlines the initial tasks to kick off the development of the Pyth
     ```
     SUPABASE_URL=your_project_url
     SUPABASE_KEY=your_service_role_key
-    SUPABASE_ACCESS_TOKEN=your_access_token
     SERVER_PORT=3000
     ```
 
@@ -72,7 +71,7 @@ This document outlines the initial tasks to kick off the development of the Pyth
 
   - Implement `src/config.py` to load environment variables and JSON config using `python-dotenv` and `pydantic`.
 
-  - Validate required fields (e.g., `SUPABASE_ACCESS_TOKEN`).
+  - Validate required fields (e.g., `SUPABASE_URL`).
 
 - **Deliverable**: Configuration module with environment and JSON loading.
 
@@ -90,7 +89,7 @@ This document outlines the initial tasks to kick off the development of the Pyth
 
 - **Description**: Implement authentication using Supabase personal access tokens.
 - **Subtasks**:
-  - Initialize Supabase client in `src/supabase_client.py` using `supabase-py` with `SUPABASE_URL` and `SUPABASE_ACCESS_TOKEN`.
+  - Initialize Supabase client in `src/supabase_client.py` using `supabase-py` with `SUPABASE_URL` and `SUPABASE_KEY`.
   - Create a function to validate the access token by calling the Supabase Management API (e.g., list projects).
   - Handle authentication errors with clear logging.
   - Write unit tests for token validation.
@@ -145,9 +144,7 @@ This document outlines the initial tasks to kick off the development of the Pyth
         "supabase": {
           "command": "python",
           "args": ["-m", "src.server"],
-          "env": {
-            "SUPABASE_ACCESS_TOKEN": "<personal-access-token>"
-          }
+          "env": {}
         }
       }
     }

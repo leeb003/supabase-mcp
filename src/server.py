@@ -13,7 +13,7 @@ from pydantic import BaseModel
 
 from .supabase_client import get_supabase_client
 from .tools.database import read_table_rows, create_records, update_records, delete_records
-from .types import ReadQuery, CreateQuery, UpdateQuery, DeleteQuery
+from src.db_types import ReadQuery, CreateQuery, UpdateQuery, DeleteQuery
 
 # Load configuration
 with open("config.json") as f:

@@ -1,6 +1,6 @@
 """Tests for the Supabase MCP server type definitions."""
 import pytest
-from src.types import ReadQuery, CreateQuery, UpdateQuery, DeleteQuery
+from src.db_types import ReadQuery, CreateQuery, UpdateQuery, DeleteQuery
 
 def test_read_query_validation():
     """Test ReadQuery validation."""

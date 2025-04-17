@@ -54,7 +54,7 @@ cp config.json.example config.json
 ```
 
 4. Update configuration files with your Supabase credentials:
-- `.env`: Set your Supabase URL, key, and access token
+- `.env`: Set your Supabase URL and key
 - `config.json`: Adjust server settings if needed
 
 ## Running the Server
@@ -150,7 +150,6 @@ This MCP server is designed to work with Cursor. To set it up:
      ```
      SUPABASE_URL=your_project_url
      SUPABASE_KEY=your_service_role_key
-     SUPABASE_ACCESS_TOKEN=your_access_token
      ```
 
 3. The `.cursor/mcp.json` file is already configured with:
@@ -163,7 +162,6 @@ This MCP server is designed to work with Cursor. To set it up:
          "env": {
            "SUPABASE_URL": "${env:SUPABASE_URL}",
            "SUPABASE_KEY": "${env:SUPABASE_KEY}",
-           "SUPABASE_ACCESS_TOKEN": "${env:SUPABASE_ACCESS_TOKEN}",
            "SERVER_PORT": "3000",
            "PYTHONPATH": "${workspaceFolder}"
          },
@@ -219,8 +217,8 @@ For additional help, check the Cursor documentation or file an issue in the proj
 
 ## Security Notes
 
-- The server uses the Supabase service role key and access token
-- Access token validation is performed on startup
+- The server uses the Supabase service role key
+- Access token validation is no longer performed
 - All database operations are validated through Pydantic models
 - Keep environment variables and config files secure
 - Never commit sensitive credentials to version control

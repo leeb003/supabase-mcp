@@ -4,7 +4,7 @@ import pytest
 from supabase import Client
 
 from src.supabase_client import get_supabase_client
-from src.types import ReadQuery, CreateQuery, UpdateQuery, DeleteQuery
+from src.db_types import ReadQuery, CreateQuery, UpdateQuery, DeleteQuery
 from src.tools.database import read_table_rows, create_records, update_records, delete_records
 
 @pytest.fixture
@@ -30,6 +30,13 @@ def test_read_table_rows_integration(supabase_client):
 
 def test_create_records_integration(supabase_client):
     """Test creating records in a table."""
+    # Clean up any existing test user before running the test
+    delete_query = DeleteQuery(
+        table_name="users",
+        filters={"email": "test@example.com"}
+    )
+    delete_records(delete_query)
+
     test_user = {
         "email": "test@example.com",
         "name": "Test User"
@@ -50,8 +57,16 @@ def test_create_records_integration(supabase_client):
     )
     delete_records(delete_query)
 
+
 def test_update_records_integration(supabase_client):
     """Test updating records in a table."""
+    # Clean up any existing test user before running the test
+    delete_query = DeleteQuery(
+        table_name="users",
+        filters={"email": "update_test@example.com"}
+    )
+    delete_records(delete_query)
+
     # First create a test record
     test_user = {
         "email": "update_test@example.com",
@@ -81,8 +96,16 @@ def test_update_records_integration(supabase_client):
     )
     delete_records(delete_query)
 
+
 def test_delete_records_integration(supabase_client):
     """Test deleting records from a table."""
+    # Clean up any existing test user before running the test
+    delete_query = DeleteQuery(
+        table_name="users",
+        filters={"email": "delete_test@example.com"}
+    )
+    delete_records(delete_query)
+
     # First create a test record
     test_user = {
         "email": "delete_test@example.com",
