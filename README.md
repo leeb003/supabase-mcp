@@ -137,6 +137,20 @@ Example:
 }
 ```
 
+## Docker
+
+You can run this MCP server in a Docker container:
+
+```sh
+# Build the Docker image
+docker build -t supabase-mcp .
+
+# Run the container (using your .env file for environment variables)
+docker run --env-file .env -p 3000:3000 supabase-mcp
+```
+
+The server will be available at http://localhost:3000
+
 ## Cursor Integration
 
 This MCP server is designed to work with Cursor. To set it up:
