@@ -194,7 +194,7 @@ async def sse_stream(request: Request):
         }
     )
 
-@router.post("/sse/messages")
+@router.post("/messages")
 async def post_message(request: Request):
     """
     Send a message to all connected SSE clients.
@@ -205,8 +205,10 @@ async def post_message(request: Request):
     Returns:
         dict: A response indicating that the message was sent.
     """
-    data = await request.json()
-    message = data.get("message")
+    body = await request.json()
+    message = json.dumps({"type": "message", "content": body.get("message", "")})
+    
     for queue in connected_clients:
         await queue.put(message)
+    
     return {"status": "sent"}
