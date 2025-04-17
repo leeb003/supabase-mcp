@@ -20,11 +20,12 @@ RUN pip install --upgrade pip && pip install -r requirements.txt
 # Copy project files
 COPY . .
 
-# Ensure config.json exists (copy from example if missing)
-RUN if [ ! -f config.json ]; then cp config.json.example config.json; fi
+# Ensure config.json and .env exist (copy from examples if missing)
+RUN if [ ! -f config.json ]; then cp config.json.example config.json; fi && \
+    if [ ! -f .env ]; then cp .env.example .env; fi
 
 # Expose the port (default FastAPI/Uvicorn port)
 EXPOSE 3000
 
-# Start the server using uvicorn
-CMD ["uvicorn", "src.server:app", "--host", "0.0.0.0", "--port", "3000"]
+# Command to run the application
+CMD ["python", "-m", "src.server"]
